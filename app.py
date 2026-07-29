@@ -623,37 +623,58 @@ if st.session_state.results_df is not None:
 
     # Downloadable Text Report Generation
     st.markdown("### 📄 Export Analysis")
-    report_content = [
-        "==================================================",
-        "          RESUME ANALYSIS REPORT                  ",
-        "==================================================",
-        f"Target Role Evaluated: {selected_role}",
-        f"Role Match Compatibility: {selected_row['match_score']}%",
-        "",
-        "--------------------------------------------------",
-        "1. SKILLS POSSESSED",
-        "--------------------------------------------------",
-        *(f" - {s}" for s in skills_possessed) if skills_possessed else [" - None identified"],
-        "",
-        "--------------------------------------------------",
-        "2. SKILL GAPS IDENTIFIED",
-        "--------------------------------------------------",
-        *(f" - {s}" for s in skills_missing) if skills_missing else [" - None (Fully Matched)"],
-        "",
-        "--------------------------------------------------",
-        "3. TOP RECOMMENDED ROLES",
-        "--------------------------------------------------",
-        *(
-            f" {idx+1}. {r['job_role']}: {r['match_score']}% Match"
-            for idx, (_, r) in enumerate(results_df.head(5).iterrows())
-        ),
-        "",
-        "--------------------------------------------------",
-        "4. ACTIONABLE LEARNING ROADMAP",
-        "--------------------------------------------------",
-        *(f" {step}" for step in roadmap_steps),
-        "==================================================",
-    ]
+ report_content = [
+    "==================================================",
+    "          RESUME ANALYSIS REPORT                  ",
+    "==================================================",
+    f"Target Role Evaluated: {selected_role}",
+    f"Role Match Compatibility: {selected_row['match_score']}%",
+    "",
+    "--------------------------------------------------",
+    "1. SKILLS POSSESSED",
+    "--------------------------------------------------",
+]
+
+if skills_possessed:
+    report_content.extend([f" - {s}" for s in skills_possessed])
+else:
+    report_content.append(" - None identified")
+
+report_content.extend([
+    "",
+    "--------------------------------------------------",
+    "2. SKILL GAPS IDENTIFIED",
+    "--------------------------------------------------",
+])
+
+if skills_missing:
+    report_content.extend([f" - {s}" for s in skills_missing])
+else:
+    report_content.append(" - None (Fully Matched)")
+
+report_content.extend([
+    "",
+    "--------------------------------------------------",
+    "3. TOP RECOMMENDED ROLES",
+    "--------------------------------------------------",
+])
+
+for idx, (_, r) in enumerate(results_df.head(5).iterrows()):
+    report_content.append(
+        f" {idx+1}. {r['job_role']}: {r['match_score']}% Match"
+    )
+
+report_content.extend([
+    "",
+    "--------------------------------------------------",
+    "4. ACTIONABLE LEARNING ROADMAP",
+    "--------------------------------------------------",
+])
+
+for step in roadmap_steps:
+    report_content.append(step)
+
+report_content.append("==================================================")
 
     st.download_button(
         label="📥 Download Detailed Analysis Report (.txt)",
