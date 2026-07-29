@@ -1,0 +1,41 @@
+skill,category
+python,Programming
+sql,Database
+pandas,Library
+numpy,Library
+matplotlib,Visualization
+seaborn,Visualization
+excel,Tools
+power bi,Tools
+statistics,Mathematics
+data visualization,Visualization
+scikit-learn,Machine Learning
+machine learning,Machine Learning
+deep learning,AI
+tensorflow,AI
+keras,AI
+pytorch,AI
+opencv,Computer Vision
+nlp,AI
+transformers,AI
+hugging face,AI
+spacy,AI
+llm,Generative AI
+rag,Generative AI
+apis,Backend
+rest api,Backend
+fastapi,Backend
+flask,Backend
+git,Tools
+github,Tools
+docker,DevOps
+sqlite,Database
+postgresql,Database
+html,Frontend
+css,Frontend
+javascript,Frontend
+streamlit,Framework
+oop,Programming
+linux,OS
+aws,Cloud
+azure,Cloud
