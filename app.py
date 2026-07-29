@@ -623,7 +623,7 @@ if st.session_state.results_df is not None:
 
     # Downloadable Text Report Generation
     st.markdown("### 📄 Export Analysis")
- report_content = [
+     report_content = [
     "==================================================",
     "          RESUME ANALYSIS REPORT                  ",
     "==================================================",
@@ -675,6 +675,8 @@ for step in roadmap_steps:
     report_content.append(step)
 
 report_content.append("==================================================")
+
+    
 
     st.download_button(
         label="📥 Download Detailed Analysis Report (.txt)",
