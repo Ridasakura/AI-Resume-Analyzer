@@ -622,59 +622,34 @@ if st.session_state.results_df is not None:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Downloadable Text Report Generation
-    st.markdown("### 📄 Export Analysis")
-     report_content = [
-    "==================================================",
-    "          RESUME ANALYSIS REPORT                  ",
-    "==================================================",
-    f"Target Role Evaluated: {selected_role}",
-    f"Role Match Compatibility: {selected_row['match_score']}%",
-    "",
-    "--------------------------------------------------",
-    "1. SKILLS POSSESSED",
-    "--------------------------------------------------",
-]
+st.markdown("### 📄 Export Analysis")
 
-if skills_possessed:
-    report_content.extend([f" - {s}" for s in skills_possessed])
-else:
-    report_content.append(" - None identified")
+report_content = f"""
+==================================================
+RESUME ANALYSIS REPORT
+==================================================
 
-report_content.extend([
-    "",
-    "--------------------------------------------------",
-    "2. SKILL GAPS IDENTIFIED",
-    "--------------------------------------------------",
-])
+Target Role: {selected_role}
+Match Score: {selected_row['match_score']}%
 
-if skills_missing:
-    report_content.extend([f" - {s}" for s in skills_missing])
-else:
-    report_content.append(" - None (Fully Matched)")
+Skills You Have:
+{chr(10).join("- " + s for s in skills_possessed) if skills_possessed else "- None"}
 
-report_content.extend([
-    "",
-    "--------------------------------------------------",
-    "3. TOP RECOMMENDED ROLES",
-    "--------------------------------------------------",
-])
+Missing Skills:
+{chr(10).join("- " + s for s in skills_missing) if skills_missing else "- None"}
 
-for idx, (_, r) in enumerate(results_df.head(5).iterrows()):
-    report_content.append(
-        f" {idx+1}. {r['job_role']}: {r['match_score']}% Match"
-    )
+Learning Roadmap:
+{chr(10).join("- " + step for step in roadmap_steps)}
+"""
 
-report_content.extend([
-    "",
-    "--------------------------------------------------",
-    "4. ACTIONABLE LEARNING ROADMAP",
-    "--------------------------------------------------",
-])
+st.download_button(
+    label="📥 Download Resume Report",
+    data=report_content,
+    file_name="resume_report.txt",
+    mime="text/plain",
+)
 
-for step in roadmap_steps:
-    report_content.append(step)
 
-report_content.append("==================================================")
 
     
 
